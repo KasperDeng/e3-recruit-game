@@ -1,0 +1,35 @@
+{
+  "name": "e3-recruit-game",
+  "version": "1.0.0",
+  "description": "a game for recruitment in campus.Rrestruct by ReactJs",
+  "main": "index.js",
+  "dependencies": {
+    "react": "^0.14.0",
+    "react-dom": "^0.14.0"
+  },
+  "devDependencies": {
+    "babel-core": "^5.8.25",
+    "babel-loader": "^5.3.2",
+    "webpack": "^1.12.2",
+    "webpack-dev-server": "^1.12.1",
+    "babelify": "^6.3.0"
+  },
+  "scripts": {
+    "build": "webpack",
+    "dev": "webpack-dev-server --devtool eval --progress --colors --hot --content-base build",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kasperdeng/e3-recruit-game.git"
+  },
+  "keywords": [
+    "react"
+  ],
+  "author": "Pete Kong, Shouxi Huang, Kasper Deng",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/kasperdeng/e3-recruit-game/issues"
+  },
+  "homepage": "https://github.com/kasperdeng/ce3-recruit-game#readme"
+}
