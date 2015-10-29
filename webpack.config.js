@@ -6,9 +6,6 @@ var path = require('path');
 module.exports = {
     entry: {
     	index:       path.resolve(__dirname, 'app/index.js'),
-    	tabBar:      path.resolve(__dirname, 'app/tabBar.js'),
-    	gameApp:     path.resolve(__dirname, 'app/gameApp.js'),
-    	gameSuccess: path.resolve(__dirname, 'app/gameSuccess.js'),
     },
     output: {
         path: path.resolve(__dirname, 'build/js'),

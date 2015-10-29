@@ -2,8 +2,10 @@
 'use strict'
 
 import React from 'react';
-import ReactDOM from 'react-dom';
+import { PropTypes } from 'react-router'
+
 import level from './levels';
+import TabBar from './TabBar';
 
 var leters = ['a', 'b', 'c', 'd', 'e'];
 
@@ -15,19 +17,18 @@ class TimeCounter extends React.Component {
 			timeout: null,
 		}
 	}
-	componentWillMount() {
+	componentDidMount() {
+		this.state.timout = setInterval(() => {
+			this.state.time++;
+			this.setState({
+				time: this.state.time,
+			})
+		}.bind(this), 1000);
+	}
+	componentWillUnmount() {
 		clearInterval(this.state.timout);
 	}
-	componentDidMount() {
-		this.state.timout = setInterval(this.timeoutFn.bind(this), 1000);
-	}
 
-	timeoutFn() {
-		this.state.time++;
-		this.setState({
-			time: this.state.time,
-		})
-    }
     getTime() {
     	return this.state.time;
     }
@@ -103,7 +104,7 @@ class DataBlock extends React.Component {
 	}
 }
 
-class GameApp extends React.Component {
+export default class GameApp extends React.Component {
 	constructor() {
 		super();
 		this.state = {
@@ -115,7 +116,8 @@ class GameApp extends React.Component {
 	}
 
 	componentWillMount() {
-		let toLevel = window.location.search.split('level=')[1];
+		console.log("href: " + window.location.href);
+		let toLevel = window.location.href.split("?")[1].split('level=')[1];
 		if ((typeof toLevel !== "undefined") && (!isNaN(Number.parseInt(toLevel)))) {
 			this.state.currentLevel = Number.parseInt(toLevel);
 		} else {
@@ -171,9 +173,19 @@ class GameApp extends React.Component {
     	// check finished
     	if(this.isFinish()) {
     		clearInterval(this.state.timout);
-    		let timestamp = new Date().getTime();
-    		window.location.href=`success.html?time=${this.refs.timeCounter.getTime()}` +
-    		`&currentLevel=${this.state.currentLevel}&totalMoves=${this.state.totalMoves}&timestamp=${timestamp}`;
+
+    		let query = {
+    			time: this.refs.timeCounter.getTime(),
+    			currentLevel: this.state.currentLevel,
+    			totalMoves: this.state.totalMoves,
+    			timestamp: new Date().getTime(),
+    		}
+
+    		this.context.history.pushState(null, 'success', query);
+    		//this.props.history.pushState(null, 'success', query);
+    		// let timestamp = new Date().getTime();
+    		// window.location.href=`#/success?time=${this.refs.timeCounter.getTime()}` +
+    		// `&currentLevel=${this.state.currentLevel}&totalMoves=${this.state.totalMoves}&timestamp=${timestamp}`;
     	}
     }
 
@@ -190,23 +202,32 @@ class GameApp extends React.Component {
 	render() {
 		return(
 			<div>
-				<div className={"ui-grid-" + leters[this.state.totcol - 2]}>
-					{this.state.blocks.map(function(block) {
-						let props = {
-							key: 'id-' + block.idx,
-							ref: block.idx,
-							totcol: block.totcol,
-							dataCol: block.dataCol,
-            	        	blockId: block.idx,
-            	        	lighted: block.lighted,
-            	        	callbackFn: block.callbackFn
-						}
-            	        return <DataBlock {...props}/>; // Spread Attributes
-            	    })}
-
+				<div data-theme="a" data-role="header">
+            	    <h3>
+            	        点亮爱立信图标
+            	    </h3>
+            	</div>
+            	<div data-role="content">
+					<div className={"ui-grid-" + leters[this.state.totcol - 2]}>
+						{this.state.blocks.map(function(block) {
+							let props = {
+								key: 'id-' + block.idx,
+								ref: block.idx,
+								totcol: block.totcol,
+								dataCol: block.dataCol,
+            		        	blockId: block.idx,
+            		        	lighted: block.lighted,
+            		        	callbackFn: block.callbackFn
+							}
+            		        return <DataBlock {...props}/>; // Spread Attributes
+            		    })}
+					</div>
 				</div>
 				<div>
             	    <TimeCounter ref="timeCounter"/>
+            	</div>
+            	<div>
+            		<TabBar level={this.state.currentLevel}/>
             	</div>
             </div>
 
@@ -214,7 +235,4 @@ class GameApp extends React.Component {
 	}
 }
 
-ReactDOM.render(
-	<GameApp />,
-	document.getElementById('grid')
-);
+GameApp.contextTypes = { history: PropTypes.history }
