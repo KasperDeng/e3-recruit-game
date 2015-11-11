@@ -5,11 +5,11 @@ var path = require('path');
 
 module.exports = {
     entry: {
-    	index:       path.resolve(__dirname, 'app/index.js'),
+      index: path.resolve(__dirname, 'app/index.js'),
     },
     output: {
-        path: path.resolve(__dirname, 'build/js'),
-        filename: '[name]Bundle.js'
+      path: path.resolve(__dirname, 'build/js'),
+      filename: '[name]Bundle.js'
     },
     resolve: {
     	extensions: ['', '.js', '.jsx']
