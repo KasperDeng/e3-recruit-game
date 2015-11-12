@@ -118,10 +118,10 @@ export default class GameApp extends React.Component {
 	componentWillMount() {
 		console.log("href: " + window.location.href);
 		let toLevel = window.location.href.split("?")[1].split('level=')[1];
-		if ((typeof toLevel !== "undefined") && (!isNaN(Number.parseInt(toLevel)))) {
-			this.state.currentLevel = Number.parseInt(toLevel);
+		if ((typeof toLevel !== "undefined") && (!isNaN(parseInt(toLevel)))) {
+			this.state.currentLevel = parseInt(toLevel);
 		} else {
-			this.state.currentLevel = Number.parseInt(window.localStorage.getItem("level")) || 0; // from persistent
+			this.state.currentLevel = parseInt(window.localStorage.getItem("level")) || 0; // from persistent
 		}
 
 		document.title = `第${this.state.currentLevel + 1}关`;

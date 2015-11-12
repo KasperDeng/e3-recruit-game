@@ -15,11 +15,11 @@ export default class GameSuccess extends React.Component {
     }
     componentWillMount() {
         let queryArray = window.location.href.split("?")[1].split("&");
-        this.state.time = Number.parseInt(queryArray[0].split('time=')[1]);
-        this.state.currentLevel = Number.parseInt(queryArray[1].split('currentLevel=')[1]);
-        this.state.totalMoves = Number.parseInt(queryArray[2].split('totalMoves=')[1]);
+        this.state.time = parseInt(queryArray[0].split('time=')[1]);
+        this.state.currentLevel = parseInt(queryArray[1].split('currentLevel=')[1]);
+        this.state.totalMoves = parseInt(queryArray[2].split('totalMoves=')[1]);
         document.title = this.state.time + "秒" + this.state.totalMoves + "步过第"
-        + (Number.parseInt(this.state.currentLevel) + 1) + "关,不服来战";
+        + (parseInt(this.state.currentLevel) + 1) + "关,不服来战";
     }
     render() {
         //level.length = 1; //for debugging finish page
